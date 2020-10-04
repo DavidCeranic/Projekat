@@ -30,7 +30,8 @@ namespace AvioCompanyAPI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<FlightReservation>>> GetFlightReservation()
         {
-            return await _context.FlightReservation.Include(i => i.ReservedSeat).Include(i => i.ReservedFlight).Include(i => i.ReservedUser).ToListAsync();
+            //return await _context.FlightReservation.Include(i => i.ReservedSeat).Include(i => i.ReservedFlight).Include(i => i.ReservedUser).ToListAsync();
+            return await _context.FlightReservation.Include(i => i.ReservedSeat).Include(i => i.ReservedFlight).ToListAsync();
         }
 
         // GET: api/FlightReservations/5
@@ -92,18 +93,19 @@ namespace AvioCompanyAPI.Controllers
         {
             var flight = _context.FlightInfo2.FirstOrDefault(f => f.FlightID == flightReservation.ReservedFlight.FlightID);
             var seat = _context.Seat.FirstOrDefault(f => f.Id == flightReservation.ReservedSeat.Id);
-            var user = _context.UserDetails.FirstOrDefault(f => f.UserId == flightReservation.ReservedUser.UserId);
+            //var user = _context.UserDetails.FirstOrDefault(f => f.UserId == flightReservation.ReservedUser.UserId);
+
             flightReservation.ReservedFlight = flight;
             flightReservation.ReservedSeat = seat;
-            flightReservation.ReservedUser = user;
+            //flightReservation.ReservedUser = user;
 
             _context.FlightReservation.Add(flightReservation);
             await _context.SaveChangesAsync();
 
             const string subject = "Reservation";
-            var body = $"<p>For:{flightReservation.ReservedUser.Email}</p><p> Uspesno ste rezervisai let</a>";
 
-            await email.SendMailAsync(flightReservation.ReservedUser.Email, subject, body);
+            //var body = $"<p>For:{flightReservation.ReservedUser.Email}</p><p> Uspesno ste rezervisai let</a>";
+            //await email.SendMailAsync(flightReservation.ReservedUser.Email, subject, body);
 
             return CreatedAtAction("GetFlightReservation", new { id = flightReservation.ReservationID }, flightReservation);
         }

@@ -83,7 +83,8 @@ namespace UserAPI.Controllers
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Name, userDetail.UserId.ToString()),
-                    new Claim(ClaimTypes.Role, userDetail.UserType)
+                    new Claim(ClaimTypes.Role, userDetail.UserType),
+                    new Claim(ClaimTypes.Email, userDetail.Email)
                 }),
                 Expires = DateTime.UtcNow.AddHours(3),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

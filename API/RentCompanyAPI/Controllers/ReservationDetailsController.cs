@@ -30,14 +30,17 @@ namespace RentCompanyAPI.Controllers
         [AllowAnonymous]
         public async Task<List<ReservationDetails>> GetAllReservation()
         {
-            return await _context.ReservationDetails.Include(p => p.User).Include(p => p.Car).Include(p => p.StartOffice).Include(p => p.EndOffice).ToListAsync();
+            //return await _context.ReservationDetails.Include(p => p.User).Include(p => p.Car).Include(p => p.StartOffice).Include(p => p.EndOffice).ToListAsync();
+            return await _context.ReservationDetails.Include(p => p.Car).Include(p => p.StartOffice).Include(p => p.EndOffice).ToListAsync();
+
         }
 
         [HttpGet("GetReservationForCar/{carId}")]
         [AllowAnonymous]
         public async Task<List<ReservationDetails>> GetReservationForCar(int carId)
         {
-            return await _context.ReservationDetails.Where(x => x.Car.CarId == carId).Include(p=>p.User).Include(p=>p.Car).Include(p => p.StartOffice).Include(p => p.EndOffice).ToListAsync();
+            //return await _context.ReservationDetails.Where(x => x.Car.CarId == carId).Include(p=>p.User).Include(p=>p.Car).Include(p => p.StartOffice).Include(p => p.EndOffice).ToListAsync();
+            return await _context.ReservationDetails.Where(x => x.Car.CarId == carId).Include(p=>p.Car).Include(p => p.StartOffice).Include(p => p.EndOffice).ToListAsync();
         }
 
 
@@ -49,10 +52,10 @@ namespace RentCompanyAPI.Controllers
             try
             {
                 var car = await _context.CarInfo.FirstOrDefaultAsync(x => x.CarId == reservationDetails.Car.CarId);
-                var user = await _context.UserDetails.FirstOrDefaultAsync(x => x.UserId == reservationDetails.User.UserId);
-                
+                //var user = await _context.UserDetails.FirstOrDefaultAsync(x => x.UserId == reservationDetails.User.UserId);
+
                 reservationDetails.Car = car;
-                reservationDetails.User = user;
+                //reservationDetails.User = user;
 
                 _context.Entry(reservationDetails).State = reservationDetails.ReservationId == 0 ? EntityState.Added : EntityState.Modified;
                 if(reservationDetails.StartOffice != null || reservationDetails.EndOffice != null)
@@ -68,8 +71,8 @@ namespace RentCompanyAPI.Controllers
                 await _context.SaveChangesAsync();
 
                 const string subject = "Reservation";
-                var body = $"<p>For:{reservationDetails.User.Email}</p><p> Uspesno ste rezervisai let</a>";
-                await email.SendMailAsync(reservationDetails.User.Email, subject, body);
+                //var body = $"<p>For:{reservationDetails.User.Email}</p><p> Uspesno ste rezervisai let</a>";
+                //await email.SendMailAsync(reservationDetails.User.Email, subject, body);
 
 
 
