@@ -33,7 +33,12 @@ namespace RentCompanyAPI
         {
             services.AddControllers();
 
-            services.AddDbContext<RentCompanyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
+            services.AddDbContext<RentCompanyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQL_Database")));
+
+            //using (var context = new AvioCompanyContext()
+            //{
+
+            //}
 
             services.AddCors();
 

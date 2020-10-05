@@ -33,10 +33,14 @@ namespace AvioCompanyAPI
         {
             services.AddControllers();
 
-            services.AddDbContext<AvioCompanyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
+            services.AddDbContext<AvioCompanyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQL_Database")));
+
+            //using (var context = new AvioCompanyContext()
+            //{
+
+            //}
 
             services.AddCors();
-
 
             //var key = Encoding.ASCII.GetBytes("this is my custom Secret key for authnetication");
             //services.AddAuthentication(x =>

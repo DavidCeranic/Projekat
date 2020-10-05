@@ -33,7 +33,12 @@ namespace UserAPI
         {
             services.AddControllers();
 
-            services.AddDbContext<UserDetailContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
+            services.AddDbContext<UserDetailContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQL_Database")));
+
+            //using (var context = new AvioCompanyContext()
+            //{
+
+            //}
 
             services.AddCors();
 

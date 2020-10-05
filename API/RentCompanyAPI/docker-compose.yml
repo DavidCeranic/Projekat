@@ -1,0 +1,14 @@
+version: '3'
+sqlserver:
+  web:
+    image: aviocompanyapi
+  db:
+    image: microsoft/mssql-server-linux:2017-latest
+    ports:
+    - "3306:3306"
+    container_name: aviocompany_sql_server
+    environment:
+    - MYSQL_ROOT_PASSWORD=password
+    - MYSQL_USER=user
+    - MYSQL_PASSWORD=password
+    - MYSQL_DATABASE=aviocompany_db
