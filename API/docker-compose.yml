@@ -1,0 +1,44 @@
+version: '3.4'
+
+services:
+  aviocompanyapi:
+    image: ${DOCKER_REGISTRY-}aviocompanyapi
+    build:
+      context: .
+      dockerfile: AvioCompanyAPI/Dockerfile
+    depends_on:
+      - mysql-server
+
+
+  rentcompanyapi:
+    image: ${DOCKER_REGISTRY-}rentcompanyapi
+    build:
+      context: .
+      dockerfile: RentCompanyAPI/Dockerfile
+    depends_on:
+      - mysql-server
+
+
+  userapi:
+    image: ${DOCKER_REGISTRY-}userapi
+    build:
+      context: .
+      dockerfile: UserAPI/Dockerfile
+    depends_on:
+      - mysql-server
+
+
+  mysql-server:
+    image: mysql/mysql-server:5.6
+    ports:
+      - "3307:3307"
+    environment:
+        MYSQL_ROOT_PASSWORD: "password"
+        MYSQL_USER: "user"
+        MYSQL_PASSWORD: "password"
+    volumes:
+      - dbdata:/var/lib/mysql
+
+volumes:
+  dbdata:
+
