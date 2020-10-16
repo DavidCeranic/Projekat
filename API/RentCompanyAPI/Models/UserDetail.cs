@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace UserAPI.Models
+namespace RentCompanyAPI.Models
 {
     public class UserDetail
     {

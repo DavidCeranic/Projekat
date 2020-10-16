@@ -26,5 +26,9 @@ namespace RentCompanyAPI.Models
 
         public DbSet<RentCompanyAPI.Models.Rate> Rate { get; set; }
 
+        public DbSet<RentCompanyAPI.Models.UserDetail> UserDetails { get; set; }
+
+        public DbSet<RentCompanyAPI.Models.Friends> Friends { get; set; }
+
     }
 }
