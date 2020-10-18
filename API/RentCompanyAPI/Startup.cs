@@ -33,7 +33,8 @@ namespace RentCompanyAPI
         {
             services.AddControllers();
 
-            services.AddDbContext<RentCompanyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQL_Database")));
+            services.AddDbContext<RentCompanyContext>(options =>
+                    options.UseMySQL(Configuration.GetConnectionString("SQL_Database"), opts => opts.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds)));
 
             //using (var context = new AvioCompanyContext()
             //{
@@ -42,38 +43,38 @@ namespace RentCompanyAPI
 
             services.AddCors();
 
-            //var key = Encoding.ASCII.GetBytes("this is my custom Secret key for authnetication");
-            //services.AddAuthentication(x =>
-            //{
-            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //    .AddJwtBearer(x =>
-            //    {
-            //        x.Events = new JwtBearerEvents
-            //        {
-            //            OnTokenValidated = context =>
-            //            {
-            //                var userService = context.HttpContext.RequestServices.GetRequiredService<RentCompanyContext>();
-            //                var userId = int.Parse(context.Principal.Identity.Name);
-            //                var user = userService.UserDetails.FirstOrDefault(x => x.UserId == userId);
-            //                if (user == null)
-            //                {
-            //                    context.Fail("Unauthorized");
-            //                }
-            //                return Task.CompletedTask;
-            //            }
-            //        };
-            //        x.RequireHttpsMetadata = false;
-            //        x.SaveToken = true;
-            //        x.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ValidateIssuerSigningKey = true,
-            //            IssuerSigningKey = new SymmetricSecurityKey(key),
-            //            ValidateIssuer = false,
-            //            ValidateAudience = false,
-            //        };
-            //    });
+            var key = Encoding.ASCII.GetBytes("this is my custom Secret key for authnetication");
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(x =>
+                {
+                    x.Events = new JwtBearerEvents
+                    {
+                        OnTokenValidated = context =>
+                        {
+                            var userService = context.HttpContext.RequestServices.GetRequiredService<RentCompanyContext>();
+                            var userId = int.Parse(context.Principal.Identity.Name);
+                            var user = userService.UserDetails.FirstOrDefault(x => x.UserId == userId);
+                            if (user == null)
+                            {
+                                context.Fail("Unauthorized");
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                    };
+                });
 
             services.AddScoped<IEmailService, EmailService>();
 

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvioCompanyAPI", "AvioCompa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentCompanyAPI", "RentCompanyAPI\RentCompanyAPI.csproj", "{8EE26619-68C4-4A87-B481-E5FAC0E93C0C}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{45765D31-82C1-4541-B989-3F76602926DE}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A7786942-42FC-4F60-B021-61DBBEE9A01E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{8EE26619-68C4-4A87-B481-E5FAC0E93C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EE26619-68C4-4A87-B481-E5FAC0E93C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EE26619-68C4-4A87-B481-E5FAC0E93C0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45765D31-82C1-4541-B989-3F76602926DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45765D31-82C1-4541-B989-3F76602926DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45765D31-82C1-4541-B989-3F76602926DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45765D31-82C1-4541-B989-3F76602926DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7786942-42FC-4F60-B021-61DBBEE9A01E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7786942-42FC-4F60-B021-61DBBEE9A01E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7786942-42FC-4F60-B021-61DBBEE9A01E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7786942-42FC-4F60-B021-61DBBEE9A01E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

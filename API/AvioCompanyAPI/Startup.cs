@@ -33,7 +33,7 @@ namespace AvioCompanyAPI
         {
             services.AddControllers();
 
-            services.AddDbContext<AvioCompanyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQL_Database")));
+            services.AddDbContext<AvioCompanyContext>(options => options.UseMySQL(Configuration.GetConnectionString("SQL_Database")));
 
             //using (var context = new AvioCompanyContext()
             //{

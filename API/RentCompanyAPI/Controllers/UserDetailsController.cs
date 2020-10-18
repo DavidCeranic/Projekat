@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using UserAPI.Models;
+using RentCompanyAPI.Models;
 
 namespace UserAPI.Controllers
 {
@@ -24,10 +24,10 @@ namespace UserAPI.Controllers
     [Authorize]
     public class UserDetailsController : ControllerBase
     {
-        private readonly UserDetailContext _context;
+        private readonly RentCompanyContext _context;
         private IEmailService email;
 
-        public UserDetailsController(UserDetailContext context, IEmailService emailService)
+        public UserDetailsController(RentCompanyContext context, IEmailService emailService)
         {
             _context = context;
             this.email = emailService;

@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using UserAPI.Models;
+using RentCompanyAPI.Models;
+using RentCompanyAPI.Models;
 
 namespace UserAPI.Controllers
 {
@@ -15,9 +16,9 @@ namespace UserAPI.Controllers
     [Authorize]
     public class FriendsController : ControllerBase
     {
-        private readonly UserDetailContext _context;
+        private readonly RentCompanyContext _context;
 
-        public FriendsController(UserDetailContext context)
+        public FriendsController(RentCompanyContext context)
         {
             _context = context;
         }
