@@ -6,7 +6,7 @@ import { Rate } from 'src/app/entities/rate/rate';
   providedIn: 'root'
 })
 export class RateService {
-  readonly rootUrl= 'http://localhost:5000/api/';
+  readonly rootUrl= 'http://localhost:5002/api/';
 
   constructor(private http:HttpClient) { }
 

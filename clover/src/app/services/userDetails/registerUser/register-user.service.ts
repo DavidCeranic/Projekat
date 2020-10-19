@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RegisterUserService {
   formData: User;
-  readonly rootUrl= 'http://localhost:5000/api/';
+  readonly rootUrl= 'http://localhost:5002/api/';
   list: User[];
   user: User;
   http: HttpClient;
@@ -22,6 +22,6 @@ export class RegisterUserService {
   }
 
   logIn(email: string, password: string) : Promise<User>{
-    return this.http.post<User>("http://localhost:5000/api/UserDetails/Login", { email, password }).toPromise();
+    return this.http.post<User>("http://localhost:5002/api/UserDetails/Login", { email, password }).toPromise();
   }
 }

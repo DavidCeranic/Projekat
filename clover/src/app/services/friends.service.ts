@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class FriendsService {
-  readonly rootUrl= 'http://localhost:5000/api/';
+  readonly rootUrl= 'http://localhost:5002/api/';
 
   constructor(private http:HttpClient) { }
 

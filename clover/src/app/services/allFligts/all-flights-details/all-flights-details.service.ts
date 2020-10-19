@@ -9,7 +9,7 @@ export class AllFligtsDetailsService {
 
 
   formData: FlightInfo;
-  readonly rootUrl= 'http://localhost:5000/api/';
+  readonly rootUrl= 'http://localhost:5001/api/';
   list: FlightInfo[];
 
   private messageSource = new BehaviorSubject<FlightInfo>(null);

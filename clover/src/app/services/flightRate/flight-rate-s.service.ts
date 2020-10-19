@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class FlightRateSService {
-  readonly rootUrl= 'http://localhost:5000/api/';
+  readonly rootUrl= 'http://localhost:5001/api/';
   constructor(private http:HttpClient) { }
 
   postFlightRate(formData: FlightRate){

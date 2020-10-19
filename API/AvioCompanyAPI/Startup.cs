@@ -35,45 +35,7 @@ namespace AvioCompanyAPI
 
             services.AddDbContext<AvioCompanyContext>(options => options.UseMySQL(Configuration.GetConnectionString("SQL_Database")));
 
-            //using (var context = new AvioCompanyContext()
-            //{
-
-            //}
-
             services.AddCors();
-
-            //var key = Encoding.ASCII.GetBytes("this is my custom Secret key for authnetication");
-            //services.AddAuthentication(x =>
-            //{
-            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //    .AddJwtBearer(x =>
-            //    {
-            //        x.Events = new JwtBearerEvents
-            //        {
-            //            OnTokenValidated = context =>
-            //            {
-            //                var userService = context.HttpContext.RequestServices.GetRequiredService<AvioCompanyContext>();
-            //                var userId = int.Parse(context.Principal.Identity.Name);
-            //                var user = userService.UserDetails.FirstOrDefault(x => x.UserId == userId);
-            //                if (user == null)
-            //                {
-            //                    context.Fail("Unauthorized");
-            //                }
-            //                return Task.CompletedTask;
-            //            }
-            //        };
-            //        x.RequireHttpsMetadata = false;
-            //        x.SaveToken = true;
-            //        x.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ValidateIssuerSigningKey = true,
-            //            IssuerSigningKey = new SymmetricSecurityKey(key),
-            //            ValidateIssuer = false,
-            //            ValidateAudience = false,
-            //        };
-            //    });
 
             services.AddScoped<IEmailService, EmailService>();
 

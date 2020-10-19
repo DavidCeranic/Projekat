@@ -7,7 +7,7 @@ import { FlightReservation } from 'src/app/entities/FlightReservation/flight-res
 })
 export class FlightReservationService {
 
-  readonly rootUrl= 'http://localhost:5000/api/';
+  readonly rootUrl= 'http://localhost:5001/api/';
 
   constructor(private http:HttpClient) { }
 

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentCompanyAPI.Models;
 
 namespace RentCompanyAPI.Migrations
 {
     [DbContext(typeof(RentCompanyContext))]
-    partial class RentCompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20201019180858_Migration3")]
+    partial class Migration3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,6 +75,34 @@ namespace RentCompanyAPI.Migrations
                     b.HasIndex("RentServiceServiceId");
 
                     b.ToTable("CarInfo");
+                });
+
+            modelBuilder.Entity("RentCompanyAPI.Models.Friends", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Added")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Removed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserEmail1")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserEmail2")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Friends");
                 });
 
             modelBuilder.Entity("RentCompanyAPI.Models.OfficeDetail", b =>

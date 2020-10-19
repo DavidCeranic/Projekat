@@ -2,23 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AvioCompanyAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RentCompanyAPI.Models;
-using RentCompanyAPI.Models;
 
-namespace UserAPI.Controllers
+namespace AvioCompanyAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class FriendsController : ControllerBase
     {
-        private readonly RentCompanyContext _context;
+        private readonly AvioCompanyContext _context;
 
-        public FriendsController(RentCompanyContext context)
+        public FriendsController(AvioCompanyContext context)
         {
             _context = context;
         }

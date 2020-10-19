@@ -27,5 +27,8 @@ namespace AvioCompanyAPI.Models
         public DbSet<AvioCompanyAPI.Models.FlightReservation> FlightReservation { get; set; }
 
         public DbSet<AvioCompanyAPI.Models.flightRate> flightRate { get; set; }
+
+        public DbSet<AvioCompanyAPI.Models.Friends> Friends { get; set; }
+
     }
 }

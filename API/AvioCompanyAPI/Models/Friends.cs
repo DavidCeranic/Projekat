@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RentCompanyAPI.Models
+namespace AvioCompanyAPI.Models
 {
     public class Friends
     {

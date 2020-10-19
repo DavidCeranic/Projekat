@@ -14,7 +14,7 @@ export class RentServiceDetailsService {
   @Output() messageEvent = new EventEmitter<RentService[]>();
 
   formData: RentService;
-  readonly rootUrl= 'http://localhost:5000/api/';
+  readonly rootUrl= 'http://localhost:5002/api/';
   list: RentService[];
   selectedService: RentService;
 

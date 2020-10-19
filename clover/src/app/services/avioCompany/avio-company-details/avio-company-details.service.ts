@@ -8,7 +8,7 @@ import {AboutCompany} from "src/app/entities/aboutCompany/about-company"
 export class AvioCompanyDetailsService {
 
   formData: AboutCompany;
-  readonly rootUrl= 'http://localhost:5000/api/';
+  readonly rootUrl= 'http://localhost:5001/api/';
   list: AboutCompany[];
 selectedServie2:AboutCompany;
 
