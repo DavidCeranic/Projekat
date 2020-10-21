@@ -65,12 +65,17 @@ namespace RentCompanyAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int?>("UserDetailUserId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Year")
                         .HasColumnType("decimal");
 
                     b.HasKey("CarId");
 
                     b.HasIndex("RentServiceServiceId");
+
+                    b.HasIndex("UserDetailUserId");
 
                     b.ToTable("CarInfo");
                 });
@@ -196,9 +201,8 @@ namespace RentCompanyAPI.Migrations
                     b.Property<int?>("StartOfficeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserID")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("ReservationId");
 
@@ -207,6 +211,8 @@ namespace RentCompanyAPI.Migrations
                     b.HasIndex("EndOfficeId");
 
                     b.HasIndex("StartOfficeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ReservationDetails");
                 });
@@ -257,6 +263,10 @@ namespace RentCompanyAPI.Migrations
                     b.HasOne("RentCompanyAPI.Models.RentService", null)
                         .WithMany("ServiceCars")
                         .HasForeignKey("RentServiceServiceId");
+
+                    b.HasOne("RentCompanyAPI.Models.UserDetail", null)
+                        .WithMany("UserCars")
+                        .HasForeignKey("UserDetailUserId");
                 });
 
             modelBuilder.Entity("RentCompanyAPI.Models.OfficeDetail", b =>
@@ -290,6 +300,12 @@ namespace RentCompanyAPI.Migrations
                     b.HasOne("RentCompanyAPI.Models.OfficeDetail", "StartOffice")
                         .WithMany()
                         .HasForeignKey("StartOfficeId");
+
+                    b.HasOne("RentCompanyAPI.Models.UserDetail", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

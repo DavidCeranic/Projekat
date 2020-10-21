@@ -9,8 +9,8 @@ using RentCompanyAPI.Models;
 namespace RentCompanyAPI.Migrations
 {
     [DbContext(typeof(RentCompanyContext))]
-    [Migration("20201018180255_Migration2")]
-    partial class Migration2
+    [Migration("20201021193247_Migration1")]
+    partial class Migration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,6 +67,9 @@ namespace RentCompanyAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int?>("UserDetailUserId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Year")
                         .HasColumnType("decimal");
 
@@ -74,35 +77,9 @@ namespace RentCompanyAPI.Migrations
 
                     b.HasIndex("RentServiceServiceId");
 
+                    b.HasIndex("UserDetailUserId");
+
                     b.ToTable("CarInfo");
-                });
-
-            modelBuilder.Entity("RentCompanyAPI.Models.Friends", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Accepted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Added")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Removed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserEmail1")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserEmail2")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Friends");
                 });
 
             modelBuilder.Entity("RentCompanyAPI.Models.OfficeDetail", b =>
@@ -226,9 +203,8 @@ namespace RentCompanyAPI.Migrations
                     b.Property<int?>("StartOfficeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserID")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("ReservationId");
 
@@ -237,6 +213,8 @@ namespace RentCompanyAPI.Migrations
                     b.HasIndex("EndOfficeId");
 
                     b.HasIndex("StartOfficeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ReservationDetails");
                 });
@@ -287,6 +265,10 @@ namespace RentCompanyAPI.Migrations
                     b.HasOne("RentCompanyAPI.Models.RentService", null)
                         .WithMany("ServiceCars")
                         .HasForeignKey("RentServiceServiceId");
+
+                    b.HasOne("RentCompanyAPI.Models.UserDetail", null)
+                        .WithMany("UserCars")
+                        .HasForeignKey("UserDetailUserId");
                 });
 
             modelBuilder.Entity("RentCompanyAPI.Models.OfficeDetail", b =>
@@ -320,6 +302,12 @@ namespace RentCompanyAPI.Migrations
                     b.HasOne("RentCompanyAPI.Models.OfficeDetail", "StartOffice")
                         .WithMany()
                         .HasForeignKey("StartOfficeId");
+
+                    b.HasOne("RentCompanyAPI.Models.UserDetail", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -29,7 +29,7 @@ namespace RentCompanyAPI.Models
         public virtual CarInfo Car { get; set; }
 
         [Required]
-        public virtual string UserID { get; set; }
+        public virtual UserDetail User { get; set; }
 
         public float Price { get; set; }
     }

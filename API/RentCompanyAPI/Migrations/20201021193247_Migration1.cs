@@ -4,27 +4,10 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace RentCompanyAPI.Migrations
 {
-    public partial class Migration2 : Migration
+    public partial class Migration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Friends",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Accepted = table.Column<bool>(nullable: false),
-                    Removed = table.Column<bool>(nullable: false),
-                    Added = table.Column<bool>(nullable: false),
-                    UserEmail1 = table.Column<string>(nullable: false),
-                    UserEmail2 = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Friends", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "RentService",
                 columns: table => new
@@ -69,37 +52,6 @@ namespace RentCompanyAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CarInfo",
-                columns: table => new
-                {
-                    CarId = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    ServiceName = table.Column<string>(type: "nvarchar(100)", nullable: true),
-                    Brand = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    Year = table.Column<decimal>(type: "decimal", nullable: false),
-                    PricePerDay = table.Column<decimal>(type: "decimal", nullable: false),
-                    NumOfSeats = table.Column<decimal>(type: "decimal", nullable: false),
-                    ImgUrl = table.Column<string>(type: "nvarchar(500)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    EndLocation = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    TypeOfCar = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    IsTaken = table.Column<int>(type: "nvarchar(100)", nullable: false),
-                    Sale = table.Column<bool>(nullable: false),
-                    RentServiceServiceId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CarInfo", x => x.CarId);
-                    table.ForeignKey(
-                        name: "FK_CarInfo_RentService_RentServiceServiceId",
-                        column: x => x.RentServiceServiceId,
-                        principalTable: "RentService",
-                        principalColumn: "ServiceId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OfficeDetail",
                 columns: table => new
                 {
@@ -119,6 +71,44 @@ namespace RentCompanyAPI.Migrations
                         column: x => x.RentServiceServiceId,
                         principalTable: "RentService",
                         principalColumn: "ServiceId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CarInfo",
+                columns: table => new
+                {
+                    CarId = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ServiceName = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Brand = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Year = table.Column<decimal>(type: "decimal", nullable: false),
+                    PricePerDay = table.Column<decimal>(type: "decimal", nullable: false),
+                    NumOfSeats = table.Column<decimal>(type: "decimal", nullable: false),
+                    ImgUrl = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    EndLocation = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    TypeOfCar = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    IsTaken = table.Column<int>(type: "nvarchar(100)", nullable: false),
+                    Sale = table.Column<bool>(nullable: false),
+                    RentServiceServiceId = table.Column<int>(nullable: true),
+                    UserDetailUserId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarInfo", x => x.CarId);
+                    table.ForeignKey(
+                        name: "FK_CarInfo_RentService_RentServiceServiceId",
+                        column: x => x.RentServiceServiceId,
+                        principalTable: "RentService",
+                        principalColumn: "ServiceId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CarInfo_UserDetails_UserDetailUserId",
+                        column: x => x.UserDetailUserId,
+                        principalTable: "UserDetails",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -153,7 +143,7 @@ namespace RentCompanyAPI.Migrations
                     StartOfficeId = table.Column<int>(nullable: true),
                     EndOfficeId = table.Column<int>(nullable: true),
                     CarId = table.Column<int>(nullable: false),
-                    UserID = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     Price = table.Column<float>(nullable: false)
                 },
                 constraints: table =>
@@ -177,12 +167,23 @@ namespace RentCompanyAPI.Migrations
                         principalTable: "OfficeDetail",
                         principalColumn: "OfficeId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ReservationDetails_UserDetails_UserId",
+                        column: x => x.UserId,
+                        principalTable: "UserDetails",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CarInfo_RentServiceServiceId",
                 table: "CarInfo",
                 column: "RentServiceServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CarInfo_UserDetailUserId",
+                table: "CarInfo",
+                column: "UserDetailUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OfficeDetail_RentServiceServiceId",
@@ -208,13 +209,15 @@ namespace RentCompanyAPI.Migrations
                 name: "IX_ReservationDetails_StartOfficeId",
                 table: "ReservationDetails",
                 column: "StartOfficeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReservationDetails_UserId",
+                table: "ReservationDetails",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Friends");
-
             migrationBuilder.DropTable(
                 name: "Rate");
 
@@ -222,13 +225,13 @@ namespace RentCompanyAPI.Migrations
                 name: "ReservationDetails");
 
             migrationBuilder.DropTable(
-                name: "UserDetails");
-
-            migrationBuilder.DropTable(
                 name: "CarInfo");
 
             migrationBuilder.DropTable(
                 name: "OfficeDetail");
+
+            migrationBuilder.DropTable(
+                name: "UserDetails");
 
             migrationBuilder.DropTable(
                 name: "RentService");
