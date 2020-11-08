@@ -1,0 +1,201 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubemanifests.yaml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: aviocompanyapi
+    name: aviocompanyapi
+  spec:
+    type: LoadBalancer
+    ports:
+    - name: "5001"
+      port: 5001
+      targetPort: 80
+    selector:
+      io.kompose.service: aviocompanyapi
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubemanifests.yaml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: mysql-server
+    name: mysql-server
+  spec:
+    type: LoadBalancer
+    ports:
+    - name: "3306"
+      port: 3306
+      targetPort: 3306
+    selector:
+      io.kompose.service: mysql-server
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubemanifests.yaml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: rentcompanyapi
+    name: rentcompanyapi
+  spec:
+    type: LoadBalancer
+    ports:
+    - name: "5002"
+      port: 5002
+      targetPort: 80
+    selector:
+      io.kompose.service: rentcompanyapi
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubemanifests.yaml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: aviocompanyapi
+    name: aviocompanyapi
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: aviocompanyapi
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubemanifests.yaml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: aviocompanyapi
+      spec:
+        containers:
+        - image: aviocompanyapi
+          imagePullPolicy: Never
+          name: aviocompanyapi
+          ports:
+          - containerPort: 80
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubemanifests.yaml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: mysql-server
+    name: mysql-server
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: mysql-server
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubemanifests.yaml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: mysql-server
+      spec:
+        containers:
+        - env:
+          - name: MYSQL_PASSWORD
+            value: Password!123
+          - name: MYSQL_ROOT_PASSWORD
+            value: RootPassword!123
+          - name: MYSQL_USER
+            value: user
+          image: mysql/mysql-server:5.6
+          imagePullPolicy: ""
+          name: mysql-server
+          ports:
+          - containerPort: 3306
+          resources: {}
+          volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: database
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes:
+        - name: database
+          persistentVolumeClaim:
+            claimName: database
+  status: {}
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    creationTimestamp: null
+    labels:
+      io.kompose.service: database
+    name: database
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubemanifests.yaml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: rentcompanyapi
+    name: rentcompanyapi
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: rentcompanyapi
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubemanifests.yaml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: rentcompanyapi
+      spec:
+        containers:
+        - image: rentcompanyapi
+          imagePullPolicy: Never
+          name: rentcompanyapi
+          ports:
+          - containerPort: 80
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+kind: List
+metadata: {}
+

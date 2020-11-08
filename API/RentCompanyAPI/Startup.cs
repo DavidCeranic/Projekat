@@ -35,7 +35,7 @@ namespace RentCompanyAPI
 
 
             services.AddDbContext<RentCompanyContext>(options =>
-                    options.UseMySQL(Configuration.GetConnectionString("SQL_Database"), opts => opts.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds)));
+                    options.UseMySql(Configuration.GetConnectionString("SQL_Database"), opts => opts.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds)));
 
             services.AddCors();
 
