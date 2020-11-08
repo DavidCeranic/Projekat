@@ -11,7 +11,6 @@ services:
     ports:
       - "5001:80"
 
-
   rentcompanyapi:
     image: ${DOCKER_REGISTRY-}rentcompanyapi
     build:
@@ -21,7 +20,6 @@ services:
       - mysql-server
     ports:
       - "5002:80"
-
 
   mysql-server:
     image: mysql/mysql-server:5.6
@@ -36,4 +34,3 @@ services:
 
 volumes:
   database:
-
