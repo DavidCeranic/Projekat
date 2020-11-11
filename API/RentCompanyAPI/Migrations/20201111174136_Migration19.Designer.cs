@@ -9,8 +9,8 @@ using RentCompanyAPI.Models;
 namespace RentCompanyAPI.Migrations
 {
     [DbContext(typeof(RentCompanyContext))]
-    [Migration("20201108165450_Migration12")]
-    partial class Migration12
+    [Migration("20201111174136_Migration19")]
+    partial class Migration19
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AvioCompanyAPI.Migrations
 {
     [DbContext(typeof(AvioCompanyContext))]
-    [Migration("20201108170124_Migration15")]
-    partial class Migration15
+    [Migration("20201111173740_Migration19")]
+    partial class Migration19
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

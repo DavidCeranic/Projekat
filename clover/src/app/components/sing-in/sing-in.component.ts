@@ -130,12 +130,13 @@ export class SingInComponent implements OnInit {
   OnGoogle() : void{
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(res=>{
       var user=new User(res.firstName,res.email,"","","","User",res.idToken, true);
-      this.http.post<User>('http://localhost:5000/api/UserDetails/'+'Social', user).toPromise().then((res: any) => {
+      this.http.post<User>('http://localhost:5002/api/UserDetails/'+'Social', user).toPromise().then((res: any) => {
         localStorage.setItem("user_token", res.StringToken);
         localStorage.setItem("role", JSON.stringify(res.UserType));
         localStorage.setItem("regEmail",res.Email);
         localStorage.setItem("regId", res.UserId);
         this.user=res as User;
+        res.logOut = true;
         this.registerService.user = res as User;
         this.registerService.loggedIn.emit(res);
         this.router.navigateByUrl('/register-user');

@@ -160,7 +160,7 @@ namespace UserAPI.Controllers
             await _context.SaveChangesAsync();
 
             const string subject = "Email verification";
-            var body = $"<p>For:{userDetail.Email}</p><a href=\"http://localhost:5000/api/UserDetails/ConfirmEmail/{userDetail.Email}\"> Email</a>";
+            var body = $"<p>For:{userDetail.Email}</p><a href=\"http://localhost:5002/api/UserDetails/ConfirmEmail/{userDetail.Email}\"> Email</a>";
 
             await email.SendMailAsync(userDetail.Email, subject, body);
 
@@ -319,7 +319,8 @@ namespace UserAPI.Controllers
                     Password= "",
                     PhoneNumber= "",
                     UserCars= "",
-                    UserFlights=""
+                    UserFlights="",
+                    LogOut = true
                 })));
             }
 

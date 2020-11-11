@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RentCompanyAPI.Migrations
 {
-    public partial class Migration12 : Migration
+    public partial class Migration19 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
