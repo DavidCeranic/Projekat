@@ -154,10 +154,11 @@ namespace UserAPI.Controllers
             
             var user = _context.UserDetails.Where(x => x.UserId == id).FirstOrDefault();
             user.Name = userDetail.Name;
+            var pass = user.Password;
             user.Password = userDetail.Password;
             user.City = userDetail.City;
             user.PhoneNumber = userDetail.PhoneNumber;
-            await _userManager.ChangePasswordAsync(user, user.Password, userDetail.Password);
+            await _userManager.ChangePasswordAsync(user, pass, userDetail.Password);
            
             
             //_context.Entry(userDetail).State = EntityState.Modified;
