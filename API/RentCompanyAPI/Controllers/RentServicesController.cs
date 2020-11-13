@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using RentCompanyAPI.Models;
 
@@ -129,6 +130,60 @@ namespace RentCompanyAPI.Controllers
         private bool RentServiceExists(int id)
         {
             return _context.RentService.Any(e => e.ServiceId == id);
+        }
+
+        [HttpGet]
+        [Route("GetRevenuesForMonth/{year}/{serviceId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<PerDate>>> GetRevenuesForMonth(int year, int serviceId)
+        {
+            var company = _context.RentService.Where(i => i.ServiceId == serviceId).Include(x=>x.ServiceCars).FirstOrDefault();
+            var perDate = new List<PerDate>();
+
+            for (int i = 1; i < 13; i++)
+            {
+                perDate.Add(new PerDate() { DayTime = i, Revenues = 0 });
+            }
+
+            foreach (var item in company.ServiceCars)
+            {
+                var reservations = _context.ReservationDetails.Where(f => f.Car.CarId == item.CarId).ToList();
+
+                foreach (var item2 in reservations)
+                {
+                    if (item2.StartDate.Year == year)
+                        perDate[item2.StartDate.Month - 1].Revenues += item2.Price;
+                }
+            }
+
+            return perDate;
+        }
+
+        [HttpGet]
+        [Route("GetRevenuesForDay/{year}/{month}/{serviceId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<PerDate>>> GetRevenuesForDay(int year, int month, int serviceId)
+        {
+            var company = _context.RentService.Where(i => i.ServiceId == serviceId).Include(x => x.ServiceCars).FirstOrDefault();
+            var perDate = new List<PerDate>();
+
+            for (int i = 1; i <= DateTime.DaysInMonth(year,month); i++)
+            {
+                perDate.Add(new PerDate() { DayTime = i, Revenues = 0 });
+            }
+
+            foreach (var item in company.ServiceCars)
+            {
+                var reservations = _context.ReservationDetails.Where(f => f.Car.CarId == item.CarId).ToList();
+
+                foreach (var item2 in reservations)
+                {
+                    if(item2.StartDate.Month == month && item2.StartDate.Year == year)
+                        perDate[item2.StartDate.Day - 1].Revenues += item2.Price;
+                }
+            }
+
+            return perDate;
         }
     }
 }

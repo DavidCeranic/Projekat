@@ -2,6 +2,7 @@ import { Injectable, EventEmitter, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { HttpClient } from '@angular/common/http';
 import { RentService } from 'src/app/entities/rentService/rent-service';
+import { PerDay } from 'src/app/entities/perDay/per-day';
 
 @Injectable({
   providedIn: 'root'
@@ -52,4 +53,13 @@ export class RentServiceDetailsService {
   getRentServiceById(serviceId: number){
     return this.http.get<RentService>(this.rootUrl + 'RentServices/' + serviceId.toString());
   }
+
+  GetRevenuesForMonth(year: number, serviceId:number){
+    return this.http.get<PerDay[]>(this.rootUrl + 'RentServices/GetRevenuesForMonth/' + year+'/'+serviceId);
+  }
+
+  GetRevenuesForDay(year: number, month: number, serviceId:number){
+    return this.http.get<PerDay[]>(this.rootUrl + 'RentServices/GetRevenuesForDay/' + year+'/'+month+'/'+serviceId);
+  }
+
 }

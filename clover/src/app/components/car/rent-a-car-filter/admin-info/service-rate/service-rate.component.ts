@@ -69,7 +69,7 @@ export class ServiceRateComponent implements OnInit {
   }
 
   onGraph(){
-    this.router.navigateByUrl('/car/admin-info/' + this.rentService.serviceId + '/about');
+    this.router.navigateByUrl('/car/admin-info/' + this.rentService.serviceId + '/graph');
     
   }
 

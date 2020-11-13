@@ -68,7 +68,7 @@ import { ChangePasswordComponent } from './components/register-user/change-passw
 import { ChangeInfoComponent } from './components/register-user/change-info/change-info.component';
 import { RevenuesComponent } from './components/car/rent-a-car-filter/admin-info/revenues/revenues/revenues.component';
 import { PointsComponent } from './components/register-user/points/points/points.component';
-
+import { GraphComponent } from './components/car/rent-a-car-filter/admin-info/graph/graph/graph.component';
 
 
 @NgModule({
@@ -119,7 +119,9 @@ import { PointsComponent } from './components/register-user/points/points/points
 
     RevenuesComponent,
 
-    PointsComponent
+    PointsComponent,
+
+    GraphComponent
 
   ],
   imports: [

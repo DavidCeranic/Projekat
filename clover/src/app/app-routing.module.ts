@@ -36,6 +36,7 @@ import { ChangeInfoComponent } from './components/register-user/change-info/chan
 import { RevenuesComponent } from './components/car/rent-a-car-filter/admin-info/revenues/revenues/revenues.component';
 import { FlightAdminGuard } from './guards/flightAdmin/flight-admin.guard';
 import { PointsComponent } from './components/register-user/points/points/points.component';
+import { GraphComponent } from './components/car/rent-a-car-filter/admin-info/graph/graph/graph.component';
 
 
 const routes: Routes = [
@@ -75,7 +76,7 @@ const routes: Routes = [
           { path: "", component: AdminInfoComponent },
           { path: "service-rate", component: ServiceRateComponent },
           { path: "car-rate", component: CarRateComponent },
-          // {path: "graph", component: },
+          {path: "graph", component: GraphComponent},
           {path: "revenues", component: RevenuesComponent}
         ]
       },

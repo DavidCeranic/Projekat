@@ -1,0 +1,21 @@
+<div>
+    <button (click)="showMonth()">
+        Month</button>
+    <button (click)="showYear()">
+        Year</button>
+</div>
+
+<div id="MonthOption" style="display: none;">
+    <input type="number" name="month" id="month" [(ngModel)]="Month">
+    <input type="number" name="year" id="year" [(ngModel)]="Year">
+    <button (click)="ShowForMonth()">
+        Show</button>
+</div>
+
+<div id="DayOption" style="display: none;">
+    <input type="number" name="year" id="year" [(ngModel)]="Year">
+    <button (click)="ShowForYear()">
+        Show</button>
+</div>
+<br>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
