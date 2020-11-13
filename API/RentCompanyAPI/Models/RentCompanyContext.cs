@@ -28,6 +28,8 @@ namespace RentCompanyAPI.Models
 
         public DbSet<RentCompanyAPI.Models.UserDetail> UserDetails { get; set; }
 
+        public DbSet<ConfigurationPrice> ConfigurationPrices { get; set; }
+
 
     }
 }

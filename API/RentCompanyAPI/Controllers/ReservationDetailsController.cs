@@ -37,14 +37,14 @@ namespace RentCompanyAPI.Controllers
         [AllowAnonymous]
         public async Task<List<ReservationDetails>> GetReservationForCar(int carId)
         {
-            return await _context.ReservationDetails.Where(x => x.Car.CarId == carId).Include(p=>p.User).Include(p=>p.Car).Include(p => p.StartOffice).Include(p => p.EndOffice).ToListAsync();
+            return await _context.ReservationDetails.Where(x => x.Car.CarId == carId).Include(p => p.User).Include(p => p.Car).Include(p => p.StartOffice).Include(p => p.EndOffice).ToListAsync();
         }
 
 
         [HttpPost]
         [Microsoft.AspNetCore.Authorization.AllowAnonymous]
         [Route("CreateReservationForCar")]
-        public async Task<IActionResult> CreateReservationForCar( ReservationDetails reservationDetails)
+        public async Task<IActionResult> CreateReservationForCar(ReservationDetails reservationDetails)
         {
             try
             {
@@ -55,14 +55,27 @@ namespace RentCompanyAPI.Controllers
                 reservationDetails.User = user;
 
                 _context.Entry(reservationDetails).State = reservationDetails.ReservationId == 0 ? EntityState.Added : EntityState.Modified;
-                if(reservationDetails.StartOffice != null || reservationDetails.EndOffice != null)
+                if (reservationDetails.StartOffice != null || reservationDetails.EndOffice != null)
                 {
-                _context.Entry(reservationDetails.StartOffice).State = reservationDetails.StartOffice.OfficeId == 0 ? EntityState.Added : EntityState.Modified;
-                _context.Entry(reservationDetails.EndOffice).State = reservationDetails.EndOffice.OfficeId == 0 ? EntityState.Added : EntityState.Modified;
+                    _context.Entry(reservationDetails.StartOffice).State = reservationDetails.StartOffice.OfficeId == 0 ? EntityState.Added : EntityState.Modified;
+                    _context.Entry(reservationDetails.EndOffice).State = reservationDetails.EndOffice.OfficeId == 0 ? EntityState.Added : EntityState.Modified;
 
                 }
 
+                if (_context.ConfigurationPrices.Count() != 0)
+                {
 
+                    var points = _context.ConfigurationPrices.FirstOrDefault();
+
+                    if (user.Points + 1 >= points.Points)
+                    {
+                        user.Points -= points.Points - 1;
+                    }
+                    else
+                    {
+                        user.Points += 1;
+                    }
+                }
 
                 await _context.ReservationDetails.AddAsync(reservationDetails);
                 await _context.SaveChangesAsync();

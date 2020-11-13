@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentCompanyAPI.Models;
 
 namespace RentCompanyAPI.Migrations
 {
     [DbContext(typeof(RentCompanyContext))]
-    partial class RentCompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20201113140943_Migration32")]
+    partial class Migration32
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

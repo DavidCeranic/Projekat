@@ -36,5 +36,7 @@ namespace RentCompanyAPI.Models
         public bool IsVerify { get; set; }
         public bool LogOut { get; set; }
 
+        public int Points { get; set; }
+
     }
 }

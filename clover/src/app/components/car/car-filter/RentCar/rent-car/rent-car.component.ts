@@ -10,6 +10,7 @@ import { UserDetailsService } from 'src/app/services/userDetails/user-details.se
 import { ReservationDetailsService } from 'src/app/services/reservationDetails/reservation-details.service';
 import { Reservation } from 'src/app/entities/reservation/reservation';
 import { Office } from 'src/app/entities/office/office';
+import { PointsService } from 'src/app/services/points/points.service';
 
 @Component({
   selector: 'app-rent-car',
@@ -34,7 +35,7 @@ export class RentCarComponent implements OnInit {
     endDate: new FormControl('', Validators.required)
   })
 
-  constructor(public reservationService: ReservationDetailsService, public service: CarDetailsService, private formBuilder: FormBuilder, public route: ActivatedRoute, public rentServiceServis: RentServiceDetailsService, public userService: UserDetailsService, public router: Router) { }
+  constructor(public reservationService: ReservationDetailsService, public service: CarDetailsService, private formBuilder: FormBuilder, public route: ActivatedRoute, public rentServiceServis: RentServiceDetailsService, public userService: UserDetailsService, public router: Router, public pointsService: PointsService) { }
 
   ngOnInit(): void {
     this.resetForm();
@@ -76,11 +77,21 @@ export class RentCarComponent implements OnInit {
       this.days = this.calculatePrice(this.reservationForm.get("startDate").value, this.reservationForm.get("endDate").value);
       this.totalPrice = this.car.pricePerDay * this.days;
 
-      var reservation = new Reservation(this.reservationForm.get("startDate").value, this.reservationForm.get("endDate").value, this.car, this.user, this.startOffice, this.endOffice, this.totalPrice);
-      this.insertReservation(reservation);
+      this.pointsService.checkDiscount().subscribe(res => {
+        if (res as number != -1) {
+          this.totalPrice -= this.totalPrice * (res as number) / 100;
+        }
+        var reservation = new Reservation(this.reservationForm.get("startDate").value, this.reservationForm.get("endDate").value, this.car, this.user, this.startOffice, this.endOffice, this.totalPrice);
+        this.insertReservation(reservation);
 
-      alert("Uspesno ste rezervisali. Ukupna cena je: " + this.totalPrice);
-      this.router.navigateByUrl('/car/rent-a-car/' + this.rentService.serviceId + '/cars');
+        alert("Uspesno ste rezervisali. Ukupna cena je: " + this.totalPrice);
+        this.router.navigateByUrl('/car/rent-a-car/' + this.rentService.serviceId + '/cars');
+      }
+
+      )
+
+
+
     }
   }
 

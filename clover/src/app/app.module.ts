@@ -67,6 +67,7 @@ import { EditCompanyProfileComponent } from './components/flights/edit-company-p
 import { ChangePasswordComponent } from './components/register-user/change-password/change-password/change-password.component';
 import { ChangeInfoComponent } from './components/register-user/change-info/change-info.component';
 import { RevenuesComponent } from './components/car/rent-a-car-filter/admin-info/revenues/revenues/revenues.component';
+import { PointsComponent } from './components/register-user/points/points/points.component';
 
 
 
@@ -116,7 +117,9 @@ import { RevenuesComponent } from './components/car/rent-a-car-filter/admin-info
 
     ChangeInfoComponent,
 
-    RevenuesComponent
+    RevenuesComponent,
+
+    PointsComponent
 
   ],
   imports: [
