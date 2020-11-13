@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AvioCompanyAPI.Migrations
 {
-    public partial class Migration19 : Migration
+    public partial class Migration31 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

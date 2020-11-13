@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Core.Interfaces.Services;
 using Core.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace RentCompanyAPI
 {
@@ -36,6 +37,19 @@ namespace RentCompanyAPI
 
             services.AddDbContext<RentCompanyContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("SQL_Database"), opts => opts.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds)));
+
+
+            services.AddDefaultIdentity<UserDetail>().AddEntityFrameworkStores<RentCompanyContext>().AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+            }
+            );
 
             services.AddCors();
 

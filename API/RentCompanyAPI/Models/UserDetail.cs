@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RentCompanyAPI.Models
 {
-    public class UserDetail
+    public class UserDetail : IdentityUser
     {
         [Key]
         public int UserId { get; set; }
@@ -16,18 +17,11 @@ namespace RentCompanyAPI.Models
         [Column(TypeName ="nvarchar(100)")]
         public string Name { get; set; }
 
-        [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string Email { get; set; }
-
         [Column(TypeName = "nvarchar(100)")]
         public string Password { get; set; }
 
         [Column(TypeName = "nvarchar(100)")]
         public string City { get; set; }
-
-        [Column(TypeName = "nvarchar(100)")]
-        public string PhoneNumber { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(100)")]

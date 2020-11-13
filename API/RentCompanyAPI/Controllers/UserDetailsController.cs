@@ -11,6 +11,7 @@ using Core.Interfaces.Services;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -25,12 +26,14 @@ namespace UserAPI.Controllers
     public class UserDetailsController : ControllerBase
     {
         private readonly RentCompanyContext _context;
+        private UserManager<UserDetail> _userManager;
         private IEmailService email;
 
-        public UserDetailsController(RentCompanyContext context, IEmailService emailService)
+        public UserDetailsController(RentCompanyContext context, IEmailService emailService, UserManager<UserDetail> _userManager)
         {
             _context = context;
             this.email = emailService;
+            this._userManager = _userManager;
         }
 
         // GET: api/UserDetails
@@ -57,14 +60,39 @@ namespace UserAPI.Controllers
             return userDetail;
         }
 
-        
+        [HttpPost("MakeAdmin")]
+        [AllowAnonymous]
+        public async Task<ActionResult<UserDetail>> MakeAdmin()
+        {
+            var userDetail = new UserDetail();
+            userDetail.Name = "Admin";
+            userDetail.LogOut = true;
+            userDetail.IsVerify = true;
+            userDetail.Email = "admin@gmail.com";
+            userDetail.UserType = "Admin";
+            userDetail.UserName = "Admin";
+
+            await _userManager.CreateAsync(userDetail, "password");
+            await _context.SaveChangesAsync();
+            return Ok();
+
+        }
+
         [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<ActionResult<UserDetail>> Login([FromBody] EmailAndPassword EmailAndPassword)
         {
-            Console.WriteLine(EmailAndPassword.email);
-            var userDetail = await _context.UserDetails.FirstOrDefaultAsync(x => x.Email == EmailAndPassword.email && x.Password == EmailAndPassword.password);
+            if (_context.UserDetails.Count() == 0)
+            {
+                await MakeAdmin();
+            }
 
+            var userDetail = await _context.UserDetails.FirstOrDefaultAsync(x => x.Email == EmailAndPassword.email);
+            
+            if(!await _userManager.CheckPasswordAsync(userDetail, EmailAndPassword.password))
+            {
+                return BadRequest("Wrong password");
+            }
 
             if (userDetail == null)
             {
@@ -122,7 +150,17 @@ namespace UserAPI.Controllers
 
 
             //_context.UserDetails.Update(userDetails);
-            _context.Entry(userDetail).State = EntityState.Modified;
+            //_context.Entry(userDetail).State = EntityState.Modified;
+            
+            var user = _context.UserDetails.Where(x => x.UserId == id).FirstOrDefault();
+            user.Name = userDetail.Name;
+            user.Password = userDetail.Password;
+            user.City = userDetail.City;
+            user.PhoneNumber = userDetail.PhoneNumber;
+            await _userManager.ChangePasswordAsync(user, user.Password, userDetail.Password);
+           
+            
+            //_context.Entry(userDetail).State = EntityState.Modified;
 
             try
             {
@@ -156,8 +194,10 @@ namespace UserAPI.Controllers
                 return BadRequest(new { message = "email alredy exists" });
             }
 
-            _context.UserDetails.Add(userDetail);
-            await _context.SaveChangesAsync();
+            //_context.UserDetails.Add(userDetail);
+            //await _context.SaveChangesAsync();
+            userDetail.UserName = userDetail.Name;
+            await _userManager.CreateAsync(userDetail, userDetail.Password);
 
             const string subject = "Email verification";
             var body = $"<p>For:{userDetail.Email}</p><a href=\"http://localhost:5002/api/UserDetails/ConfirmEmail/{userDetail.Email}\"> Email</a>";
