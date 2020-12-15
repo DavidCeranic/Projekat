@@ -12,13 +12,13 @@
 </header>
 
 
-<section style="width: 100px; height: 100px; margin-left: 90%; margin-top: 2%;" id="admin" [hidden]="check()">
+<section style="width: 100px; height: 100px; margin-left: 90%; margin-top: 2%;" id="admin">
   <div class="adminDiv">
     <div class="booking-form">
       <form style="margin-top: 27%;">
         <p style="color:white;"> Admin Services</p>
         <div class="form-btn">
-          <button class="submit-btn" type="button" (click)="onAddOffice()">Add Office</button>
+          <button class="submit-btn" type="button" [disabled]="check()" (click)="onAddOffice()">Add Office</button>
         </div>
       </form>
     </div>

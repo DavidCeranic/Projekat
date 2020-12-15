@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PerDay } from 'src/app/entities/perDay/per-day';
+import { RentService } from 'src/app/entities/rentService/rent-service';
 import { RentServiceDetailsService } from 'src/app/services/rentServices/rentServiceDetails/rent-service-details.service';
 import * as CanvasJS from '../../../../../../../assets/canvasjs/canvasjs.min';
 
@@ -10,16 +11,28 @@ import * as CanvasJS from '../../../../../../../assets/canvasjs/canvasjs.min';
   styleUrls: ['./graph.component.css']
 })
 export class GraphComponent implements OnInit {
-
+  rentService: RentService;
   chart: any;
 	Month: number = new Date().getMonth() + 1;
 	Year: number = new Date().getFullYear();
   Option: number = 0;
   id: number;
 
-  constructor(private service: RentServiceDetailsService, public route: ActivatedRoute) { }
+  constructor(private service: RentServiceDetailsService, public route: ActivatedRoute, public router: Router) { }
   
   ngOnInit(): void {
+
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.id = params['rentid'];
+        this.service.getRentServiceById(this.id).subscribe(
+          dataV => {
+            this.rentService = dataV;
+          }
+        )
+      }
+    )
+
     this.route.params.subscribe(
       (params: Params) => {
         this.id = params['rentid'];});
@@ -64,6 +77,24 @@ export class GraphComponent implements OnInit {
         this.chart.render();
       }
     });
+  }
+
+
+  onServiceRate(){
+    this.router.navigateByUrl('/car/admin-info/' + this.rentService.serviceId + '/service-rate');
+  }
+
+  onCarRate(){
+    this.router.navigateByUrl('/car/admin-info/' + this.rentService.serviceId + '/car-rate');
+  }
+
+  onGraph(){
+    this.router.navigateByUrl('/car/admin-info/' + this.rentService.serviceId + '/graph');
+    
+  }
+
+  onRevenues(){
+    this.router.navigateByUrl('/car/admin-info/' + this.rentService.serviceId + '/revenues');
   }
 
 }
